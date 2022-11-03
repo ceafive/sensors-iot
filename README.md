@@ -21,7 +21,7 @@ docker-compose build --no-cache
 
 ### Step 2: Start Service
 
-When build is complete you can start the service (make sure port 3000 is free on your local machine) with:
+When build is complete you can start the service (make sure port 3000 & 5000 are free on your local machine) with:
 
 ```sh
 docker-compose up
