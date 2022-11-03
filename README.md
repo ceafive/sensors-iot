@@ -49,13 +49,13 @@ http://localhost:3000
 
 
 # REFLECTION:
-#### What aspect of this exercise did you find most interesting?
+### What aspect of this exercise did you find most interesting?
 The interesting part of the exercise is I get to use of lot the things I know on a small piece of exercise like this one. When you begin at first it looks small but then by the time you are done thinking through the ask, you begin to rule out which tools are not fit for purpose and use the right tools for the right job.
 
-#### What did you find most cumbersome?
+### What did you find most cumbersome?
 It was not really cumbersome but the fact that the server is minified and you can only log the data when you implement the frontend. Thankfully there were pointers in the instructions for the shape of the data so that was alright. 
 
-#### React optimization techniques
+### React optimization techniques
 - We should use a global state management solution like React Context API or Redux. In this project I use Redux Toolkit. This prevents prop drilling thereby causing the whole tree to rerender when the parent component updates
 - I also make sure my sensors state was separate from the other states in the app, this is to make sure that when I am updating state I update only the sensors state so as to prevents update the global state
 - I also made sure my sensors state as an object and not an array. This is because if my state was an array, I would have to find the particular sensor whose state has changed using a array method like `find` and then update the particular item an then insert in place `splice` and that will cause a huge problem on a very large array causing a time complexity of O(n)
