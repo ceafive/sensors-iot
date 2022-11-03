@@ -1,46 +1,67 @@
-# Getting Started with Create React App
+![node](https://img.shields.io/badge/node-16-green)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+# sensors IOT
 
-## Available Scripts
+## Display continuous data streams of sensors
 
-In the project directory, you can run:
+## 🤔 How do I use this?
 
-### `npm start`
+<details>
+<summary>Hey- before you actually use this, make sure you've [Docker](https://www.docker.com/) and docker-compose (comes with latest verions of Docker) installed and running. Expand to read more</summary>
+<br>
+</details>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Step 1: Build Image
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+In your project directory, run
 
-### `npm test`
+```sh
+docker-compose build --no-cache 
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Step 2: Start Service
 
-### `npm run build`
+When build is complete you can start the service (make sure port 3000 is free on your local machine) with:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```sh
+docker-compose up
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Step 3: Verfiy Services
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+You can verify services with:
 
-### `npm run eject`
+```sh
+docker-compose ps
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### If you need to stop services:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```sh
+docker-compose stop
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Step 4: Open browser and go to url below
+```sh
+http://localhost:3000
+```
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# REFLECTION:
+#### What aspect of this exercise did you find most interesting?
+The interesting part of the exercise is I get to use of lot the things I know on a small piece of exercise like this one. When you begin at first it looks small but then by the time you are done thinking through the ask, you begin to rule out which tools are not fit for purpose and use the right tools for the right job.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### What did you find most cumbersome?
+It was not really cumbersome but the fact that the server is minified and you can only log the data when you implement the frontend. Thankfully there were pointers in the instructions for the shape of the data so that was alright. 
+
+#### React optimization techniques
+- We should use a global state management solution like React Context API or Redux. In this project I use Redux Toolkit. This prevents prop drilling thereby causing the whole tree to rerender when the parent component updates
+- I also make sure my sensors state was separate from the other states in the app, this is to make sure that when I am updating state I update only the sensors state so as to prevents update the global state
+- I also made sure my sensors state as an object and not an array. This is because if my state was an array, I would have to find the particular sensor whose state has changed using a array method like `find` and then update the particular item an then insert in place `splice` and that will cause a huge problem on a very large array causing a time complexity of O(n)
+- I also did some optimization by making sure each sensor is it's own component thereby separating renders to component level. I then memomized each card to make sure that if the `sensor` prop on the card doesn't change then the card will not rerender. This is a huge benefit in a large project
+- I also suggest techinques like using Web workers to run the websocket steam on a separate thread from the UI thread
+- Also made sure that there were not inline functions being used because React will recreate these functions on every render and this will be bad for performance in a huge project. Also the use of `useCallback` so functions are only reacreated when dependencies change
+
+
+

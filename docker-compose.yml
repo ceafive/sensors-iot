@@ -1,0 +1,27 @@
+version: "3"
+services:
+  websocket:
+    build:
+      context: "./server"
+    volumes:
+      - ./server:/app/api
+      - /app/server/node_modules
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "5000:5000"
+    container_name: b-server
+  frontend:
+    build:
+      context: "./client"
+      args:
+        NODE_ENV: development
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "3000:3000"
+    container_name: b-fe
+    stdin_open: true
+    volumes:
+      - ./client:/app/my-app
+      - /app/client/node_modules
