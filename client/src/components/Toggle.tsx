@@ -37,8 +37,8 @@ const Toggle = ({ text }: Props) => {
         <div className="block bg-transparent border border-gray-400 w-12 h-7 rounded-full" />
         <div
           data-testid="toggle-dot"
-          className={`dot absolute left-1 top-1 bg-transparent border border-gray-400 w-5 h-5 rounded-full transition ${
-            showConnected && "translate-x-full bg-[#48bb78]"
+          className={`dot absolute left-1 top-1 border border-gray-400 w-5 h-5 rounded-full transition-all ${
+            showConnected ? "translate-x-full bg-green-500" : "bg-transparent"
           }`}
         />
       </div>
