@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { sensorsWorker } from "../../App";
 import { CommandPayload, SensorInterface, SensorsState } from "../interfaces";
 
 const initialState: SensorsState = {};
@@ -10,7 +11,8 @@ export const fetchSensorsAsync = createAsyncThunk(
   (_, { dispatch }) => {
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data) as SensorInterface;
-      dispatch(setSensors(data));
+      sensorsWorker.postMessage(data);
+      // dispatch(setSensors(data));
     };
   }
 );
