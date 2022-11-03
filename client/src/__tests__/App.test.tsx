@@ -53,7 +53,7 @@ describe("test react components", () => {
     });
 
     expect(screen.getByTestId("toggle-dot")).toHaveClass(
-      "translate-x-full bg-[#48bb78]"
+      "translate-x-full bg-green-500"
     );
 
     act(() => {
@@ -61,7 +61,7 @@ describe("test react components", () => {
     });
 
     expect(screen.getByTestId("toggle-dot")).not.toHaveClass(
-      "translate-x-full bg-[#48bb78]"
+      "translate-x-full bg-green-500"
     );
   });
 
@@ -70,8 +70,8 @@ describe("test react components", () => {
     let client: WebSocket;
 
     let serverMessages = [
-      { id: "0", name: "Wind", connected: false, unit: "m/s", value: "10" },
-      { id: "0", name: "Wind", connected: false, unit: "m/s", value: "10" },
+      { id: "0", name: "Wind", connected: false, unit: "m/s", value: null },
+      { id: "1", name: "Temperature", connected: true, unit: "C", value: "10" },
     ];
 
     beforeEach(async () => {
@@ -79,8 +79,10 @@ describe("test react components", () => {
       client = new WebSocket("ws://localhost:5000");
       await server.connected;
     });
+
     afterEach(() => {
       WS.clean();
+      cleanup();
     });
 
     test("the server keeps track of received messages, and yields them as they come in", async () => {
@@ -100,11 +102,21 @@ describe("test react components", () => {
           store.dispatch(setSensors(serverMessage));
         }
       });
-      await server.connected;
 
       expect(screen.getByTestId("sensors-display")).toBeInTheDocument();
       expect(screen.getByTestId("sensor-card-0")).toBeInTheDocument();
       expect(screen.getByTestId("sensor-card-0")).toHaveTextContent("Wind");
+    });
+
+    it("renders only connected", async () => {
+      renderApp(App);
+
+      act(() => {
+        store.dispatch(setShowConnected(true));
+      });
+
+      expect(screen.getByTestId("sensors-display")).toBeInTheDocument();
+      expect(screen.queryByTestId("sensor-card-0")).not.toBeInTheDocument();
     });
   });
 });

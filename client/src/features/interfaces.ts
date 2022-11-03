@@ -3,7 +3,7 @@ export interface SensorInterface {
   name: string;
   connected: boolean;
   unit: string;
-  value: string;
+  value: string | null;
 }
 
 export interface CommandPayload {

@@ -27,6 +27,7 @@ const SensorCard = ({ sensor }: { sensor: SensorInterface }) => {
       </div>
 
       <button
+        data-testid={`sensor-button-${sensor.id}`}
         onClick={onToggleSensor}
         className={`w-full h-[36px] flex items-center justify-center text-inherit border-none ${
           !sensor.connected
