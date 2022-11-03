@@ -6,16 +6,12 @@ const initialState: SensorsState = {};
 
 export const socket = new WebSocket("ws://localhost:5000");
 
-export const fetchSensorsAsync = createAsyncThunk(
-  "app/sensors",
-  (_, { dispatch }) => {
-    socket.onmessage = (e) => {
-      const data = JSON.parse(e.data) as SensorInterface;
-      sensorsWorker.postMessage(data);
-      // dispatch(setSensors(data));
-    };
-  }
-);
+export const fetchSensorsAsync = createAsyncThunk("app/sensors", () => {
+  socket.onmessage = (e) => {
+    const data = JSON.parse(e.data) as SensorInterface;
+    sensorsWorker.postMessage(data);
+  };
+});
 
 export const sensorSlice = createSlice({
   name: "sensors",
