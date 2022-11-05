@@ -10,9 +10,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchSensorsAsync());
-  }, [dispatch]);
 
-  useEffect(() => {
     sensorsWorker.onmessage = (event: MessageEvent) => {
       const { data } = event;
       dispatch(setSensors(data));
